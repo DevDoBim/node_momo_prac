@@ -1,13 +1,13 @@
 const express = require("express");
 
-const app = express();  // app 객체 생성
-const router = express.Router(); 
+const db = require("./models/index.js")
+const todosRouter = require("./routes/todos.router.js");
 
-router.get("/", (req, res) => { // app api 생성
-  res.send("Hi!");
-});
+const app = express(); // app 객체 생성
 
-app.use("/api", express.json(), router); // 미들웨어 등록 .use("경로", 미들웨어, 해당 라우터)
+app.use("/api", express.json(), todosRouter);
+app.use(express.static("./assets")); // static : 정적인 파일을 연결해주는 미들웨어
+// app.js 파일 기준으로 ./assets 경로에 있는 파일을 가공 없이 그대로 전달해주는 미들웨어
 
 app.listen(8080, () => {
   console.log("서버가 켜졌어요!");
